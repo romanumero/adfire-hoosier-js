@@ -4,7 +4,9 @@ export default defineNuxtConfig({
         xandrUsername: '',
         xandrPassword: '',
         apiToken: '',
-        advertiserId: ''
+        advertiserId: '',
+        awsAccessKeyId: '',
+        awsSecretAccessKey: ''
     }
 
 })

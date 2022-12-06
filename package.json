@@ -11,7 +11,12 @@
     "nuxt": "3.0.0"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.223.0",
+    "@aws-sdk/credential-provider-node": "^3.223.0",
+    "@types/nodemailer": "^6.4.6",
     "cheerio": "1.0.0-rc.12",
+    "handlebars": "^4.7.7",
+    "nodemailer": "^6.8.0",
     "zod": "^3.19.1"
   }
 }

@@ -1,7 +1,13 @@
 # @name Run the job
 POST http://localhost:3000/api/fire
 Content-Type: application/json
-Authorization: {{ token }}
+Authorization: {{token}}
+####
+
+# @name Run production job
+POST https://adfire-hoosier.vercel.app/api/fire
+Content-Type: application/json
+Authorization: {{token}}
 
 ####
 PUT https://api.appnexus.com/line-item?id=19636644&advertiser_id=1501302
