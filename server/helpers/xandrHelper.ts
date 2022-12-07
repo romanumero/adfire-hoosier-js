@@ -110,6 +110,7 @@ export async function run() {
         let sendEmail = false
         let status = CAMPAIGN_DEACTIVATED_TEXT
         let backgroundColor = 'background-color: rgb(128, 128, 1await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)28);'
+        console.log(`${game} is ${purse}`)
 
         if (game === 'Mega Millions') {
             const game = 'Mega Millions'
