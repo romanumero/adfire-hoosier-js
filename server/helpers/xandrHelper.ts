@@ -125,48 +125,46 @@ export async function run() {
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
                 status = CAMPAIGN_ACTIVATED_TEXT
 
+                console.log(`Activating MEGA_MILLIONS_LOW ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)
 
                 if (megaLineItemLowState !== GameState.ACTIVE) {
                     sendEmail = true
                 }
 
-                console.log(`Activate MEGA_MILLIONS_LOW ${purse}`)
 
             } else if (purse < 250) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
+                console.log(`Dectivating MEGA_MILLIONS_LOW ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
 
                 if (megaLineItemLowState !== GameState.INACTIVE) {
                     sendEmail = true
                 }
 
-                console.log(`Dectivate MEGA_MILLIONS_LOW ${purse}`)
             }
 
             if (purse >= 400 && purse <= 550) {
                 status = CAMPAIGN_ACTIVATED_TEXT
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
+                console.log(`Activating MEGA_MILLIONS_HIGH ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.ACTIVE)
 
                 if (megaLineItemHighState !== GameState.ACTIVE) {
                     sendEmail = true
                 }
 
-                console.log(`Activate MEGA_MILLIONS_HIGH ${purse}`)
-
             } else if (purse > 500) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
+                console.log(`Dectivating MEGA_MILLIONS_HIGH ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.INACTIVE)
 
                 if (megaLineItemHighState !== GameState.INACTIVE) {
                     sendEmail = true
                 }
-
-                console.log(`Dectivate MEGA_MILLIONS_HIGH ${purse}`)
             }
         }
 
@@ -182,19 +180,17 @@ export async function run() {
                 status = CAMPAIGN_ACTIVATED_TEXT
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
+                console.log(`Activating POWERBALL_LOW ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.ACTIVE)
 
                 if (powerballItemLowState !== GameState.ACTIVE) {
                     sendEmail = true
                 }
 
-                console.log(`Activate POWERBALL_LOW ${purse}`)
-
             } else if (purse < 250) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
-                console.log(`Deactivate POWERBALL_LOW ${purse}`)
-
+                console.log(`Deactivating POWERBALL_LOW ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.INACTIVE)
 
                 if (powerballItemLowState !== GameState.INACTIVE) {
@@ -206,24 +202,22 @@ export async function run() {
                 status = CAMPAIGN_ACTIVATED_TEXT
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
+                console.log(`Activating POWERBALL_HIGH ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.ACTIVE)
 
                 if (powerballItemHighState !== GameState.INACTIVE) {
                     sendEmail = true
                 }
 
-                console.log(`Activate POWERBALL_HIGH ${purse}`)
-
             } else if (purse > 550) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
+                console.log(`Deactivating POWERBALL_HIGH ${purse}`)
                 await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.INACTIVE)
 
                 if (powerballItemHighState !== GameState.INACTIVE) {
                     sendEmail = true
                 }
-
-                console.log(`Deactivate POWERBALL_HIGH ${purse}`)
             }
         }
 
