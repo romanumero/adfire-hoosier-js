@@ -104,7 +104,7 @@ export async function run() {
     const listItems = $('item')
 
     // @ts-ignore
-    listItems.each(async (idx, el) => {
+    listItems.each(async function (idx, el) {
         const game = $(el).children('title').text().split('Jackpot for ')[1]
         const purse = parseFloat($(el).children('description').text().split(': $')[1].split(" ")[0].replace(",", ""))
         let sendEmail = false
@@ -112,129 +112,131 @@ export async function run() {
         let backgroundColor = 'background-color: rgb(128, 128, 1await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)28);'
         console.log(`${game} is ${purse}`)
 
-        if (game === 'Mega Millions') {
-            const game = 'Mega Millions'
+        try {
+            if (game === 'Mega Millions') {
+                const game = 'Mega Millions'
 
-            const megaLineItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW))
-            const megaLineItemLowState = megaLineItemLowStateRequest.response["line-item"].state
-            const megaLineItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH))
-            const megaLineItemHighState = megaLineItemHighStateRequest.response["line-item"].state
+                const megaLineItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW))
+                const megaLineItemLowState = megaLineItemLowStateRequest.response["line-item"].state
+                const megaLineItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH))
+                const megaLineItemHighState = megaLineItemHighStateRequest.response["line-item"].state
 
 
-            if (purse >= 250 && purse < 400) {
-                backgroundColor = ACTIVATED_CAMPAIGN_STYLE
-                status = CAMPAIGN_ACTIVATED_TEXT
+                if (purse >= 250 && purse < 400) {
+                    backgroundColor = ACTIVATED_CAMPAIGN_STYLE
+                    status = CAMPAIGN_ACTIVATED_TEXT
 
-                console.log(`Activating MEGA_MILLIONS_LOW ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)
+                    console.log(`Activating MEGA_MILLIONS_LOW ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)
 
-                if (megaLineItemLowState !== GameState.ACTIVE) {
-                    sendEmail = true
+                    if (megaLineItemLowState !== GameState.ACTIVE) {
+                        sendEmail = true
+                    }
+
+
+                } else if (purse < 250) {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Dectivating MEGA_MILLIONS_LOW ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
+
+                    if (megaLineItemLowState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
+
                 }
 
+                if (purse >= 400 && purse <= 550) {
+                    status = CAMPAIGN_ACTIVATED_TEXT
+                    backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
-            } else if (purse < 250) {
-                status = CAMPAIGN_DEACTIVATED_TEXT
+                    console.log(`Activating MEGA_MILLIONS_HIGH ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.ACTIVE)
 
-                console.log(`Dectivating MEGA_MILLIONS_LOW ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
+                    if (megaLineItemHighState !== GameState.ACTIVE) {
+                        sendEmail = true
+                    }
 
-                if (megaLineItemLowState !== GameState.INACTIVE) {
-                    sendEmail = true
-                }
+                } else if (purse > 500) {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
 
-            }
+                    console.log(`Dectivating MEGA_MILLIONS_HIGH ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.INACTIVE)
 
-            if (purse >= 400 && purse <= 550) {
-                status = CAMPAIGN_ACTIVATED_TEXT
-                backgroundColor = ACTIVATED_CAMPAIGN_STYLE
-
-                console.log(`Activating MEGA_MILLIONS_HIGH ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.ACTIVE)
-
-                if (megaLineItemHighState !== GameState.ACTIVE) {
-                    sendEmail = true
-                }
-
-            } else if (purse > 500) {
-                status = CAMPAIGN_DEACTIVATED_TEXT
-
-                console.log(`Dectivating MEGA_MILLIONS_HIGH ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.INACTIVE)
-
-                if (megaLineItemHighState !== GameState.INACTIVE) {
-                    sendEmail = true
-                }
-            }
-        }
-
-        if (game === 'Powerball') {
-            const game = 'Powerball'
-
-            const powerballItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_LOW))
-            const powerballItemLowState = powerballItemLowStateRequest.response["line-item"].state
-            const powerballItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_HIGH))
-            const powerballItemHighState = powerballItemHighStateRequest.response["line-item"].state
-
-            if (purse >= 250 && purse < 400) {
-                status = CAMPAIGN_ACTIVATED_TEXT
-                backgroundColor = ACTIVATED_CAMPAIGN_STYLE
-
-                console.log(`Activating POWERBALL_LOW ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.ACTIVE)
-
-                if (powerballItemLowState !== GameState.ACTIVE) {
-                    sendEmail = true
-                }
-
-            } else if (purse < 250) {
-                status = CAMPAIGN_DEACTIVATED_TEXT
-
-                console.log(`Deactivating POWERBALL_LOW ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.INACTIVE)
-
-                if (powerballItemLowState !== GameState.INACTIVE) {
-                    sendEmail = true
+                    if (megaLineItemHighState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
                 }
             }
 
-            if (purse >= 400 && purse <= 550) {
-                status = CAMPAIGN_ACTIVATED_TEXT
-                backgroundColor = ACTIVATED_CAMPAIGN_STYLE
+            if (game === 'Powerball') {
+                const game = 'Powerball'
 
-                console.log(`Activating POWERBALL_HIGH ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.ACTIVE)
+                const powerballItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_LOW))
+                const powerballItemLowState = powerballItemLowStateRequest.response["line-item"].state
+                const powerballItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_HIGH))
+                const powerballItemHighState = powerballItemHighStateRequest.response["line-item"].state
 
-                if (powerballItemHighState !== GameState.INACTIVE) {
-                    sendEmail = true
+                if (purse >= 250 && purse < 400) {
+                    status = CAMPAIGN_ACTIVATED_TEXT
+                    backgroundColor = ACTIVATED_CAMPAIGN_STYLE
+
+                    console.log(`Activating POWERBALL_LOW ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW), config.advertiserId, GameState.ACTIVE)
+
+                    if (powerballItemLowState !== GameState.ACTIVE) {
+                        sendEmail = true
+                    }
+
+                } else if (purse < 250) {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Deactivating POWERBALL_LOW ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW), config.advertiserId, GameState.INACTIVE)
+
+                    if (powerballItemLowState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
                 }
 
-            } else if (purse > 550) {
-                status = CAMPAIGN_DEACTIVATED_TEXT
+                if (purse >= 400 && purse <= 550) {
+                    status = CAMPAIGN_ACTIVATED_TEXT
+                    backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
-                console.log(`Deactivating POWERBALL_HIGH ${purse}`)
-                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.INACTIVE)
+                    console.log(`Activating POWERBALL_HIGH ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH), config.advertiserId, GameState.ACTIVE)
 
-                if (powerballItemHighState !== GameState.INACTIVE) {
-                    sendEmail = true
+                    if (powerballItemHighState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
+
+                } else if (purse > 550) {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Deactivating POWERBALL_HIGH ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH), config.advertiserId, GameState.INACTIVE)
+
+                    if (powerballItemHighState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
                 }
             }
-        }
 
-        const mailContent: MailContainer = {
-            campaignName: "Hoosier Lottery",
-            status,
-            game,
-            backgroundColor,
-            purse
-        }
+            const mailContent: MailContainer = {
+                campaignName: "Hoosier Lottery",
+                status,
+                game,
+                backgroundColor,
+                purse
+            }
 
-        if (sendEmail) {
-            await buildEmail(mailContent)
+            if (sendEmail) {
+                await buildEmail(mailContent)
+            }
+        } catch (e) {
+            console.error(e)
         }
     })
-
-    return null
 }
 
 export async function buildEmail(mailContent: MailContainer) {
@@ -270,6 +272,7 @@ export async function buildEmail(mailContent: MailContainer) {
         html: htmlToSend
     },
         (err: Error|null, info: SentMessageInfo) => {
+            console.log(info)
             console.log(err)
         })
 }
