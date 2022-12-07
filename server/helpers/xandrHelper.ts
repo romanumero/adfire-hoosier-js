@@ -109,7 +109,7 @@ export async function run() {
         const purse = parseFloat($(el).children('description').text().split(': $')[1].split(" ")[0].replace(",", ""))
         let sendEmail = false
         let status = CAMPAIGN_DEACTIVATED_TEXT
-        let backgroundColor = 'background-color: rgb(128, 128, 128);'
+        let backgroundColor = 'background-color: rgb(128, 128, 1await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)28);'
 
         if (game === 'Mega Millions') {
             const game = 'Mega Millions'
@@ -124,8 +124,9 @@ export async function run() {
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
                 status = CAMPAIGN_ACTIVATED_TEXT
 
+                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)
+
                 if (megaLineItemLowState !== GameState.ACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)
                     sendEmail = true
                 }
 
@@ -134,8 +135,9 @@ export async function run() {
             } else if (purse < 250) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
-                if(megaLineItemLowState !== GameState.INACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
+                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
+
+                if (megaLineItemLowState !== GameState.INACTIVE) {
                     sendEmail = true
                 }
 
@@ -146,8 +148,9 @@ export async function run() {
                 status = CAMPAIGN_ACTIVATED_TEXT
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
+                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.ACTIVE)
+
                 if (megaLineItemHighState !== GameState.ACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.ACTIVE)
                     sendEmail = true
                 }
 
@@ -156,8 +159,9 @@ export async function run() {
             } else if (purse > 500) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
+                await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.INACTIVE)
+
                 if (megaLineItemHighState !== GameState.INACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.INACTIVE)
                     sendEmail = true
                 }
 
@@ -177,8 +181,9 @@ export async function run() {
                 status = CAMPAIGN_ACTIVATED_TEXT
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
+                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.ACTIVE)
+
                 if (powerballItemLowState !== GameState.ACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.ACTIVE)
                     sendEmail = true
                 }
 
@@ -189,8 +194,9 @@ export async function run() {
 
                 console.log(`Deactivate POWERBALL_LOW ${purse}`)
 
+                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.INACTIVE)
+
                 if (powerballItemLowState !== GameState.INACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW),config.advertiserId, GameState.INACTIVE)
                     sendEmail = true
                 }
             }
@@ -199,8 +205,9 @@ export async function run() {
                 status = CAMPAIGN_ACTIVATED_TEXT
                 backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
+                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.ACTIVE)
+
                 if (powerballItemHighState !== GameState.INACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.ACTIVE)
                     sendEmail = true
                 }
 
@@ -209,8 +216,9 @@ export async function run() {
             } else if (purse > 550) {
                 status = CAMPAIGN_DEACTIVATED_TEXT
 
+                await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.INACTIVE)
+
                 if (powerballItemHighState !== GameState.INACTIVE) {
-                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH),config.advertiserId, GameState.INACTIVE)
                     sendEmail = true
                 }
 
