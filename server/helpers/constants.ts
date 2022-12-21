@@ -5,6 +5,13 @@ export enum Games {
     MEGA_MILLIONS_HIGH = "Mega Millions High"
 }
 
+export enum GameNames {
+    POWERBALL = "Powerball",
+    MEGA_MILLIONS = "Mega Millions",
+    HOOSIER_LOTTO = "Hoosier Lotto",
+    CASH5 = "Ca$h 5",
+}
+
 export enum GameState {
     INACTIVE = "inactive",
     ACTIVE = "active"

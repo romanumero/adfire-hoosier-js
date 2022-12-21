@@ -113,6 +113,8 @@ export async function run() {
         console.log(`${game} is ${purse}`)
 
         try {
+            console.log(`Evaluating ${game} with purse ${purse}`)
+
             if (game === 'Mega Millions') {
                 const game = 'Mega Millions'
 
@@ -221,6 +223,7 @@ export async function run() {
                     }
                 }
             }
+
 
             const mailContent: MailContainer = {
                 campaignName: "Hoosier Lottery",
