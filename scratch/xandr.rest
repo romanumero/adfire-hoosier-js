@@ -12,3 +12,15 @@ Authorization: {{token}}
 ####
 PUT https://api.appnexus.com/line-item?id=19636644&advertiser_id=1501302
 Content-Type: application/json
+
+
+###
+POST https://api.appnexus.com/auth
+Content-Type: application/json
+
+{
+    "auth": {
+        "username" : "axon-platform@kortx.io",
+        "password" : "2zATTB[VS8gZ$}Pb"
+    }
+}

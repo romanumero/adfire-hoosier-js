@@ -54,7 +54,7 @@ export async function retrieveToken() {
                 'Content-Type': 'application/json'
             },
             body: authBody
-        })
+        }).catch((error) => { console.log(error) })
 
     return auth.parse(result).response.token
 }
@@ -68,9 +68,9 @@ export async function getLineItemById(auth: string, id: string) {
                 'Content-Type': 'application/json',
                 'Authorization': auth
             }
-        })
+        }).catch((error) => { console.log(error) })
 
-    return lineItem.parse(result).response
+    return lineItem.parse(result)
 }
 
 export async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
@@ -88,9 +88,9 @@ export async function toggleLineItemState(auth: string, id: string, advertisingI
                     "state": state
                 }
             }
-        })
+        }).catch((error) => { console.log(error) })
 
-    return lineItem.parse(result).response
+    return lineItem.parse(result)
 }
 
 export async function run() {
@@ -116,14 +116,12 @@ export async function run() {
         try {
             console.log(`Evaluating ${game} with purse ${purse}`)
 
-            if (game === 'Mega Millions') {
-                console.log(`In ${GameNames.MEGA_MILLIONS}`)
-                const game = 'Mega Millions'
+            if (game === GameNames.MEGA_MILLIONS) {
 
                 const megaLineItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW))
-                const megaLineItemLowState = megaLineItemLowStateRequest["line-item"].state
+                const megaLineItemLowState = megaLineItemLowStateRequest.response["line-item"].state
                 const megaLineItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH))
-                const megaLineItemHighState = megaLineItemHighStateRequest["line-item"].state
+                const megaLineItemHighState = megaLineItemHighStateRequest.response["line-item"].state
 
 
                 if (purse >= 250 && purse < 400) {
@@ -148,10 +146,9 @@ export async function run() {
                     if (megaLineItemHighState !== GameState.ACTIVE) {
                         sendEmail = true
                     }
-
                 }
 
-                if (purse > 500) {
+                if (purse > 550) {
                     status = CAMPAIGN_DEACTIVATED_TEXT
 
                     console.log(`Dectivating MEGA_MILLIONS_HIGH ${purse}`)
@@ -171,17 +168,15 @@ export async function run() {
                     if (megaLineItemLowState !== GameState.INACTIVE) {
                         sendEmail = true
                     }
-
                 }
             }
 
-            if (game === 'Powerball') {
-                const game = 'Powerball'
+            if (game === GameNames.POWERBALL) {
 
                 const powerballItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_LOW))
-                const powerballItemLowState = powerballItemLowStateRequest["line-item"].state
+                const powerballItemLowState = powerballItemLowStateRequest.response["line-item"].state
                 const powerballItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_HIGH))
-                const powerballItemHighState = powerballItemHighStateRequest["line-item"].state
+                const powerballItemHighState = powerballItemHighStateRequest.response["line-item"].state
 
                 if (purse >= 250 && purse < 400) {
                     status = CAMPAIGN_ACTIVATED_TEXT
@@ -206,7 +201,6 @@ export async function run() {
                     if (powerballItemHighState !== GameState.INACTIVE) {
                         sendEmail = true
                     }
-
                 }
 
                 if (purse > 550) {
@@ -232,6 +226,57 @@ export async function run() {
                 }
             }
 
+            if (game === GameNames.HOOSIER_LOTTO) {
+                const hoosierLottoItemStateRequest = await getLineItemById(token, lineItemMap.get(Games.HOOSIER_LOTTO))
+                const hoosierLottoState = hoosierLottoItemStateRequest.response["line-item"].state
+
+                if (purse > 10) {
+                    status = CAMPAIGN_ACTIVATED_TEXT
+                    backgroundColor = ACTIVATED_CAMPAIGN_STYLE
+
+                    console.log(`Activating HOOSIER_LOTTO ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.HOOSIER_LOTTO), config.advertiserId, GameState.ACTIVE)
+
+                    if (hoosierLottoState !== GameState.ACTIVE) {
+                        sendEmail = true
+                    }
+                } else {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Deactivating HOOSIER_LOTTO ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.HOOSIER_LOTTO), config.advertiserId, GameState.INACTIVE)
+
+                    if (hoosierLottoState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
+                }
+            }
+
+            if (game === GameNames.CASH5) {
+                const cash5ItemStateRequest = await getLineItemById(token, lineItemMap.get(Games.CASH5))
+                const cash5State = cash5ItemStateRequest.response["line-item"].state
+
+                if (purse > 1000000) {
+                    status = CAMPAIGN_ACTIVATED_TEXT
+                    backgroundColor = ACTIVATED_CAMPAIGN_STYLE
+
+                    console.log(`Activating CASH5 ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.CASH5), config.advertiserId, GameState.ACTIVE)
+
+                    if (cash5State !== GameState.ACTIVE) {
+                        sendEmail = true
+                    }
+                } else {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Deactivating CASH5 ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.CASH5), config.advertiserId, GameState.INACTIVE)
+
+                    if (cash5State !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
+                }
+            }
 
             const mailContent: MailContainer = {
                 campaignName: "Hoosier Lottery",
