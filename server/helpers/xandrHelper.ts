@@ -9,7 +9,7 @@ import {
     lineItemMap,
     GameState,
     CAMPAIGN_DEACTIVATED_TEXT,
-    CAMPAIGN_ACTIVATED_TEXT, ACTIVATED_CAMPAIGN_STYLE
+    CAMPAIGN_ACTIVATED_TEXT, ACTIVATED_CAMPAIGN_STYLE, GameNames
 } from "~/server/helpers/constants"
 import handlebars from "handlebars";
 
@@ -70,12 +70,12 @@ export async function getLineItemById(auth: string, id: string) {
             }
         })
 
-    return lineItem.parse(result)
+    return lineItem.parse(result).response
 }
 
 export async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
 
-    return await $fetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
+    const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
         {
             method: 'PUT',
             headers: {
@@ -89,6 +89,8 @@ export async function toggleLineItemState(auth: string, id: string, advertisingI
                 }
             }
         })
+
+    return lineItem.parse(result).response
 }
 
 export async function run() {
@@ -110,12 +112,12 @@ export async function run() {
         let sendEmail = false
         let status = CAMPAIGN_DEACTIVATED_TEXT
         let backgroundColor = 'background-color: rgb(128, 128, 1await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)28);'
-        console.log(`${game} is ${purse}`)
 
         try {
             console.log(`Evaluating ${game} with purse ${purse}`)
 
             if (game === 'Mega Millions') {
+                console.log(`In ${GameNames.MEGA_MILLIONS}`)
                 const game = 'Mega Millions'
 
                 const megaLineItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW))
