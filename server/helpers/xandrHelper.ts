@@ -121,9 +121,9 @@ export async function run() {
                 const game = 'Mega Millions'
 
                 const megaLineItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW))
-                const megaLineItemLowState = megaLineItemLowStateRequest.response["line-item"].state
+                const megaLineItemLowState = megaLineItemLowStateRequest["line-item"].state
                 const megaLineItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH))
-                const megaLineItemHighState = megaLineItemHighStateRequest.response["line-item"].state
+                const megaLineItemHighState = megaLineItemHighStateRequest["line-item"].state
 
 
                 if (purse >= 250 && purse < 400) {
@@ -136,18 +136,6 @@ export async function run() {
                     if (megaLineItemLowState !== GameState.ACTIVE) {
                         sendEmail = true
                     }
-
-
-                } else if (purse < 250) {
-                    status = CAMPAIGN_DEACTIVATED_TEXT
-
-                    console.log(`Dectivating MEGA_MILLIONS_LOW ${purse}`)
-                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
-
-                    if (megaLineItemLowState !== GameState.INACTIVE) {
-                        sendEmail = true
-                    }
-
                 }
 
                 if (purse >= 400 && purse <= 550) {
@@ -161,7 +149,9 @@ export async function run() {
                         sendEmail = true
                     }
 
-                } else if (purse > 500) {
+                }
+
+                if (purse > 500) {
                     status = CAMPAIGN_DEACTIVATED_TEXT
 
                     console.log(`Dectivating MEGA_MILLIONS_HIGH ${purse}`)
@@ -171,15 +161,27 @@ export async function run() {
                         sendEmail = true
                     }
                 }
+
+                if (purse < 250) {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Dectivating MEGA_MILLIONS_LOW ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
+
+                    if (megaLineItemLowState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
+
+                }
             }
 
             if (game === 'Powerball') {
                 const game = 'Powerball'
 
                 const powerballItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_LOW))
-                const powerballItemLowState = powerballItemLowStateRequest.response["line-item"].state
+                const powerballItemLowState = powerballItemLowStateRequest["line-item"].state
                 const powerballItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_HIGH))
-                const powerballItemHighState = powerballItemHighStateRequest.response["line-item"].state
+                const powerballItemHighState = powerballItemHighStateRequest["line-item"].state
 
                 if (purse >= 250 && purse < 400) {
                     status = CAMPAIGN_ACTIVATED_TEXT
@@ -192,15 +194,6 @@ export async function run() {
                         sendEmail = true
                     }
 
-                } else if (purse < 250) {
-                    status = CAMPAIGN_DEACTIVATED_TEXT
-
-                    console.log(`Deactivating POWERBALL_LOW ${purse}`)
-                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW), config.advertiserId, GameState.INACTIVE)
-
-                    if (powerballItemLowState !== GameState.INACTIVE) {
-                        sendEmail = true
-                    }
                 }
 
                 if (purse >= 400 && purse <= 550) {
@@ -214,13 +207,26 @@ export async function run() {
                         sendEmail = true
                     }
 
-                } else if (purse > 550) {
+                }
+
+                if (purse > 550) {
                     status = CAMPAIGN_DEACTIVATED_TEXT
 
                     console.log(`Deactivating POWERBALL_HIGH ${purse}`)
                     await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH), config.advertiserId, GameState.INACTIVE)
 
                     if (powerballItemHighState !== GameState.INACTIVE) {
+                        sendEmail = true
+                    }
+                }
+
+                if (purse < 250) {
+                    status = CAMPAIGN_DEACTIVATED_TEXT
+
+                    console.log(`Deactivating POWERBALL_LOW ${purse}`)
+                    await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW), config.advertiserId, GameState.INACTIVE)
+
+                    if (powerballItemLowState !== GameState.INACTIVE) {
                         sendEmail = true
                     }
                 }
