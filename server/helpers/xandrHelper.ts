@@ -290,7 +290,7 @@ export async function run() {
                 await buildEmail(mailContent)
             }
         } catch (e) {
-            console.error(e)
+            console.error(`Error from "run" method: ${e}`)
         }
     })
 }
@@ -329,6 +329,7 @@ export async function buildEmail(mailContent: MailContainer) {
     },
         (err: Error|null, info: SentMessageInfo) => {
             console.log(info)
-            console.log(err)
+            console.log(`
+            error from buildEmail method: ${err}`)
         })
 }
