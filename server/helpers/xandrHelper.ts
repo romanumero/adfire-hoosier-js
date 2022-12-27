@@ -320,6 +320,8 @@ export async function run() {
         }
     })
 
+    await log.write(log.entry({message: `Finished running ${updatedGameList}`}))
+
     return updatedGameList
 }
 
