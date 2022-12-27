@@ -14,8 +14,7 @@ import {
 import handlebars from "handlebars";
 import { Logging } from "@google-cloud/logging";
 
-const logging = new Logging();
-await logging.setProjectId("kortx-hub")
+const logging = new Logging({ projectId: 'kortx-hub' });
 const log = logging.log('adfire-hoosier-lottery');
 
 const auth = z.object({
