@@ -60,7 +60,7 @@ export async function retrieveToken() {
 
 export async function getLineItemById(auth: string, id: string) {
 
-    const result = await useFetch(`https://api.appnexus.com/line-item?id=${id}`,
+    const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}`,
         {
             method: 'GET',
             headers: {
@@ -74,7 +74,7 @@ export async function getLineItemById(auth: string, id: string) {
 
 export async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
 
-    const result = await useFetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
+    const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
         {
             method: 'PUT',
             headers: {
