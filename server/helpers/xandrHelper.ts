@@ -53,28 +53,28 @@ export async function retrieveToken() {
                 'Content-Type': 'application/json'
             },
             body: authBody
-        }).catch((error) => { console.log(error) })
+        })
 
     return auth.parse(result).response.token
 }
 
 export async function getLineItemById(auth: string, id: string) {
 
-    const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}`,
+    const result = await useFetch(`https://api.appnexus.com/line-item?id=${id}`,
         {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': auth
             }
-        }).catch((error) => { console.log(error) })
+        })
 
     return lineItem.parse(result)
 }
 
 export async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
 
-    const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
+    const result = await useFetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
         {
             method: 'PUT',
             headers: {
@@ -87,7 +87,7 @@ export async function toggleLineItemState(auth: string, id: string, advertisingI
                     "state": state
                 }
             }
-        }).catch((error) => { console.log(error) })
+        })
 
     return lineItem.parse(result)
 }
@@ -112,8 +112,6 @@ export async function run() {
         let backgroundColor = 'background-color: rgb(128, 128, 128);'
 
         try {
-
-            console.log(`Evaluating ${game} with purse ${purse}`)
 
             if (game === GameNames.MEGA_MILLIONS) {
 
