@@ -12,6 +12,10 @@ import {
     CAMPAIGN_ACTIVATED_TEXT, ACTIVATED_CAMPAIGN_STYLE, GameNames
 } from "~/server/helpers/constants"
 import handlebars from "handlebars";
+import { Logging } from "@google-cloud/logging";
+
+const logging = new Logging();
+const log = logging.log('adfire-hoosier-lottery');
 
 const auth = z.object({
     "response": z.object({
@@ -113,6 +117,8 @@ export async function run() {
         let backgroundColor = 'background-color: rgb(128, 128, 128);'
 
         try {
+
+            log.entry(`Evaluating ${game} with purse ${purse}`)
             console.log(`Evaluating ${game} with purse ${purse}`)
 
             if (game === GameNames.MEGA_MILLIONS) {
