@@ -127,8 +127,6 @@ export async function run() {
                     backgroundColor = ACTIVATED_CAMPAIGN_STYLE
                     status = CAMPAIGN_ACTIVATED_TEXT
 
-                    updatedGameList.push(`Activating MEGA_MILLIONS_LOW ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.ACTIVE)
                     console.log(`Activating MEGA_MILLIONS_LOW ${purse}: ${JSON.stringify(result)}`)
 
@@ -141,8 +139,6 @@ export async function run() {
                     status = CAMPAIGN_ACTIVATED_TEXT
                     backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
-                    updatedGameList.push(`Activating MEGA_MILLIONS_HIGH ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.ACTIVE)
                     console.log(`Activating MEGA_MILLIONS_HIGH ${purse}: ${JSON.stringify(result)}`)
 
@@ -154,8 +150,6 @@ export async function run() {
                 if (purse > 550) {
                     status = CAMPAIGN_DEACTIVATED_TEXT
 
-                    updatedGameList.push(`Dectivating MEGA_MILLIONS_HIGH ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH), config.advertiserId, GameState.INACTIVE)
                     console.log(`Dectivating MEGA_MILLIONS_HIGH ${purse}: ${JSON.stringify(result)}`)
 
@@ -166,8 +160,6 @@ export async function run() {
 
                 if (purse < 250) {
                     status = CAMPAIGN_DEACTIVATED_TEXT
-
-                    updatedGameList.push(`Dectivating MEGA_MILLIONS_LOW ${purse}`)
 
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW), config.advertiserId, GameState.INACTIVE)
                     console.log(`Dectivating MEGA_MILLIONS_LOW ${purse}: ${JSON.stringify(result)}`)
@@ -202,8 +194,6 @@ export async function run() {
                     status = CAMPAIGN_ACTIVATED_TEXT
                     backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
-                    updatedGameList.push(`Activating POWERBALL_HIGH ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH), config.advertiserId, GameState.ACTIVE)
                     console.log(`Activating POWERBALL_HIGH ${purse}: ${JSON.stringify(result)}`)
 
@@ -226,8 +216,6 @@ export async function run() {
                 if (purse < 250) {
                     status = CAMPAIGN_DEACTIVATED_TEXT
 
-                    updatedGameList.push(`Deactivating POWERBALL_LOW ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_LOW), config.advertiserId, GameState.INACTIVE)
                     console.log(`Deactivating POWERBALL_LOW ${purse}: ${JSON.stringify(result)}`)
 
@@ -245,8 +233,6 @@ export async function run() {
                     status = CAMPAIGN_ACTIVATED_TEXT
                     backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
-                    updatedGameList.push(`Activating HOOSIER_LOTTO ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.HOOSIER_LOTTO), config.advertiserId, GameState.ACTIVE)
                     console.log(`Activating HOOSIER_LOTTO ${purse}: ${JSON.stringify(result)}`)
 
@@ -255,8 +241,6 @@ export async function run() {
                     }
                 } else {
                     status = CAMPAIGN_DEACTIVATED_TEXT
-
-                    updatedGameList.push(`Deactivating HOOSIER_LOTTO ${purse}`)
 
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.HOOSIER_LOTTO), config.advertiserId, GameState.INACTIVE)
                     console.log(`Deactivating HOOSIER_LOTTO ${purse}: ${JSON.stringify(result)}`)
@@ -275,8 +259,6 @@ export async function run() {
                     status = CAMPAIGN_ACTIVATED_TEXT
                     backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
-                    updatedGameList.push(`Activating CASH5 ${purse}`)
-
                     const result = await toggleLineItemState(token, lineItemMap.get(Games.CASH5), config.advertiserId, GameState.ACTIVE)
                     console.log(`Activating CASH5 ${purse}: ${JSON.stringify(result)}`)
 
@@ -286,10 +268,8 @@ export async function run() {
                 } else {
                     status = CAMPAIGN_DEACTIVATED_TEXT
 
-                    console.log(`Deactivating CASH5 ${purse}`)
-                    updatedGameList.push(`Deactivating CASH5 ${purse}`)
-
-                    await toggleLineItemState(token, lineItemMap.get(Games.CASH5), config.advertiserId, GameState.INACTIVE)
+                    const result = await toggleLineItemState(token, lineItemMap.get(Games.CASH5), config.advertiserId, GameState.INACTIVE)
+                    console.log(`Deactivating CASH5 ${purse}: ${JSON.stringify(result)}`)
 
                     if (cash5State !== GameState.INACTIVE) {
                         sendEmail = true
