@@ -12,10 +12,6 @@ import {
     CAMPAIGN_ACTIVATED_TEXT, ACTIVATED_CAMPAIGN_STYLE, GameNames
 } from "~/server/helpers/constants"
 import handlebars from "handlebars";
-import { Logging } from "@google-cloud/logging";
-
-const logging = new Logging({ projectId: 'kortx-hub' });
-const log = logging.log('adfire-hoosier-lottery');
 
 const auth = z.object({
     "response": z.object({
@@ -45,7 +41,6 @@ const config = useRuntimeConfig()
 
 async function parseRssFeed(): Promise<string> {
     return await $fetch(LOTTERY_URL)
-
 }
 
 export async function retrieveToken() {
@@ -118,7 +113,6 @@ export async function run() {
 
         try {
 
-            log.entry(`Evaluating ${game} with purse ${purse}`)
             console.log(`Evaluating ${game} with purse ${purse}`)
 
             if (game === GameNames.MEGA_MILLIONS) {
@@ -318,8 +312,6 @@ export async function run() {
             console.error(`Error from "run" method: ${e}`)
         }
     })
-
-    await log.write(log.entry({message: `Finished running ${updatedGameList}`}))
 
     return updatedGameList
 }
