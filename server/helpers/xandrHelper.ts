@@ -15,6 +15,7 @@ import handlebars from "handlebars";
 import { Logging } from "@google-cloud/logging";
 
 const logging = new Logging();
+await logging.setProjectId("kortx-hub")
 const log = logging.log('adfire-hoosier-lottery');
 
 const auth = z.object({
@@ -294,7 +295,6 @@ export async function run() {
 
                     console.log(`Deactivating CASH5 ${purse}`)
                     updatedGameList.push(`Deactivating CASH5 ${purse}`)
-                    console.log(updatedGameList)
 
                     await toggleLineItemState(token, lineItemMap.get(Games.CASH5), config.advertiserId, GameState.INACTIVE)
 
