@@ -4,12 +4,14 @@ import aws from '@aws-sdk/client-ses'
 import nodemailer, {SentMessageInfo} from 'nodemailer'
 import fs from 'fs'
 import {
-    LOTTERY_URL,
-    Games,
-    lineItemMap,
-    GameState,
+    ACTIVATED_CAMPAIGN_STYLE,
+    CAMPAIGN_ACTIVATED_TEXT,
     CAMPAIGN_DEACTIVATED_TEXT,
-    CAMPAIGN_ACTIVATED_TEXT, ACTIVATED_CAMPAIGN_STYLE, GameNames
+    GameNames,
+    Games,
+    GameState,
+    lineItemMap,
+    LOTTERY_URL
 } from "~/server/helpers/constants"
 import handlebars from "handlebars";
 
@@ -60,7 +62,8 @@ export async function retrieveToken() {
 
 export async function getLineItemById(auth: string, id: string) {
 
-    const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}`,
+    //return lineItem.parse(result)
+    return await $fetch(`https://api.appnexus.com/line-item?id=${id}`,
         {
             method: 'GET',
             headers: {
@@ -68,8 +71,6 @@ export async function getLineItemById(auth: string, id: string) {
                 'Authorization': auth
             }
         })
-
-    return lineItem.parse(result)
 }
 
 export async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
@@ -116,9 +117,9 @@ export async function run() {
             if (game === GameNames.MEGA_MILLIONS) {
 
                 const megaLineItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_LOW))
-                const megaLineItemLowState = megaLineItemLowStateRequest.response["line-item"].state
+                const megaLineItemLowState = lineItem.parse(megaLineItemLowStateRequest).response["line-item"].state
                 const megaLineItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.MEGA_MILLIONS_HIGH))
-                const megaLineItemHighState = megaLineItemHighStateRequest.response["line-item"].state
+                const megaLineItemHighState = lineItem.parse(megaLineItemHighStateRequest).response["line-item"].state
 
 
                 if (purse >= 250 && purse < 400) {
@@ -171,9 +172,9 @@ export async function run() {
             if (game === GameNames.POWERBALL) {
 
                 const powerballItemLowStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_LOW))
-                const powerballItemLowState = powerballItemLowStateRequest.response["line-item"].state
+                const powerballItemLowState = lineItem.parse(powerballItemLowStateRequest).response["line-item"].state
                 const powerballItemHighStateRequest = await getLineItemById(token, lineItemMap.get(Games.POWERBALL_HIGH))
-                const powerballItemHighState = powerballItemHighStateRequest.response["line-item"].state
+                const powerballItemHighState = lineItem.parse(powerballItemHighStateRequest).response["line-item"].state
 
                 if (purse >= 250 && purse < 400) {
                     status = CAMPAIGN_ACTIVATED_TEXT
@@ -225,7 +226,7 @@ export async function run() {
 
             if (game === GameNames.HOOSIER_LOTTO) {
                 const hoosierLottoItemStateRequest = await getLineItemById(token, lineItemMap.get(Games.HOOSIER_LOTTO))
-                const hoosierLottoState = hoosierLottoItemStateRequest.response["line-item"].state
+                const hoosierLottoState = lineItem.parse(hoosierLottoItemStateRequest).response["line-item"].state
 
                 if (purse > 10) {
                     status = CAMPAIGN_ACTIVATED_TEXT
@@ -251,7 +252,7 @@ export async function run() {
 
             if (game === GameNames.CASH5) {
                 const cash5ItemStateRequest = await getLineItemById(token, lineItemMap.get(Games.CASH5))
-                const cash5State = cash5ItemStateRequest.response["line-item"].state
+                const cash5State = lineItem.parse(cash5ItemStateRequest).response["line-item"].state
 
                 if (purse > 1000000) {
                     status = CAMPAIGN_ACTIVATED_TEXT
