@@ -63,7 +63,7 @@ export async function retrieveToken() {
 export async function getLineItemById(auth: string, id: string) {
 
     //return lineItem.parse(result)
-    return await $fetch(`https://api.appnexus.com/line-item?id=${id}`,
+    return $fetch(`https://api.appnexus.com/line-item?id=${id}`,
         {
             method: 'GET',
             headers: {
