@@ -104,7 +104,7 @@ export async function run() {
     const listItems = $('item')
 
     // @ts-ignore
-    await listItems.each(async function (idx, el) {
+    listItems.each(async function (idx, el) {
         const game = $(el).children('title').text().split('Jackpot for ')[1]
         const purse = parseFloat($(el).children('description').text().split(': $')[1].split(" ")[0].replace(",", ""))
         let sendEmail = false
