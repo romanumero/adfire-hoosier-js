@@ -51,6 +51,7 @@ export default defineEventHandler( async (event) => {
     async function run() {
         const token = await retrieveToken()
         const lineItem = await getLineItemById(token, '18599662')
+        console.log(lineItem)
         return lineItem
     }
 
