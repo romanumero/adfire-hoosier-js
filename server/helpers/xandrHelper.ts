@@ -45,7 +45,7 @@ async function parseRssFeed(): Promise<string> {
     return await $fetch(LOTTERY_URL)
 }
 
-export async function retrieveToken() {
+async function retrieveToken() {
     const authBody = {auth: {username: config.xandrUsername, password: config.xandrPassword}}
 
     const result = await $fetch('https://api.appnexus.com/auth',
@@ -60,7 +60,7 @@ export async function retrieveToken() {
     return auth.parse(result).response.token
 }
 
-export async function getLineItemById(auth: string, id: string) {
+async function getLineItemById(auth: string, id: string) {
 
     //return lineItem.parse(result)
     return $fetch(`https://api.appnexus.com/line-item?id=${id}`,
@@ -73,7 +73,7 @@ export async function getLineItemById(auth: string, id: string) {
         })
 }
 
-export async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
+async function toggleLineItemState(auth: string, id: string, advertisingId: string, state: string) {
 
     const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}&advertiser_id=${advertisingId}`,
         {
@@ -103,9 +103,8 @@ export async function run() {
     const $ = cheerio.load(contents)
 
     const listItems = $('item')
-
-    // @ts-ignore
-    listItems.each(async function (idx, el) {
+    for (const el in listItems) {
+        console.log($(el).children("description").text())
         const game = $(el).children('title').text().split('Jackpot for ')[1]
         const purse = parseFloat($(el).children('description').text().split(': $')[1].split(" ")[0].replace(",", ""))
         let sendEmail = false
@@ -290,7 +289,7 @@ export async function run() {
         } catch (e) {
             console.error(`Error from "run" method: ${e}`)
         }
-    })
+    }
 
     return updatedGameList
 }
