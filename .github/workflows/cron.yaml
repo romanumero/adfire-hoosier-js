@@ -9,5 +9,5 @@ jobs:
       - name: Call our API route
         run: |
           curl --request POST \
-          --url 'https://adfire-hoosier.vercel.app/api/fire' \
+          --url 'https://adfire-hoosier.vercel.app/api/trigger' \
           --header 'Authorization: ${{ secrets.API_TOKEN }}'
