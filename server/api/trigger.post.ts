@@ -113,6 +113,7 @@ export default defineEventHandler( async (event) => {
     }
 
     async function run() {
+        let success = false
         let sendEmail = false
         let status = CAMPAIGN_DEACTIVATED_TEXT
         let backgroundColor = 'background-color: rgb(128, 128, 128);'
@@ -121,7 +122,9 @@ export default defineEventHandler( async (event) => {
 
         const gameData = await parseRssFeed()
 
-        for (let game of gameData) {
+        for (let i=0; i<gameData.length; i++) {
+
+            const game = gameData[i]
             try {
 
                 if (game.name === GameNames.MEGA_MILLIONS) {
@@ -196,7 +199,6 @@ export default defineEventHandler( async (event) => {
                         if (powerballItemLowState !== GameState.ACTIVE) {
                             sendEmail = true
                         }
-
                     }
 
                     if (game.jackpot >= 400 && game.jackpot <= 550) {
@@ -300,15 +302,11 @@ export default defineEventHandler( async (event) => {
 
             } catch (e) {
                 console.log(e)
-                return false
             }
 
-            return true
+            success = true
         }
-
-        const lineItem = await getLineItemById(token, '18599662')
-
-        return lineItem
+        return success
     }
 
     return {
