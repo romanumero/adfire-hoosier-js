@@ -315,7 +315,7 @@ export default defineEventHandler( async (event) => {
 })
 
 async function buildEmail(mailContent: MailContainer) {
-    const source = fs.readFileSync("./server/templates/email.handlebars", 'utf-8');
+    const source = fs.readFileSync('./server/templates/email.handlebars', 'utf-8');
     const template = handlebars.compile(source)
 
     const htmlToSend = template({
@@ -339,10 +339,9 @@ async function buildEmail(mailContent: MailContainer) {
         SES: { ses, aws}
     })
 
-
     await transporter.sendMail({
             from: 'adfire@kortx.io',
-            to: 'damon@kortx.io',
+            to: 'damon@kortx.io, maria@kortx.io, bryan@kortx.io',
             subject: 'KORTX AdFire Campaign Notification',
             html: htmlToSend
         },
