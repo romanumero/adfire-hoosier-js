@@ -296,6 +296,7 @@ export default defineEventHandler( async (event) => {
                     purse: game.jackpot,
                 }
 
+                console.log(`Current working directory: ${process.cwd()}`)
                 if (sendEmail) {
                     await buildEmail(mailContent)
                 }

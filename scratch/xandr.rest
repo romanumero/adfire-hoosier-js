@@ -1,9 +1,4 @@
 # @name Run the job
-POST http://localhost:3000/api/fire
-Content-Type: application/json
-Authorization: {{token}}
-####
-
 POST http://localhost:3000/api/trigger
 Content-Type: application/json
 Authorization: {{token}}
