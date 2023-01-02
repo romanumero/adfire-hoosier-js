@@ -16,6 +16,7 @@ import fs from "fs";
 import handlebars from "handlebars";
 import aws from "@aws-sdk/client-ses";
 import nodemailer, {SentMessageInfo} from "nodemailer";
+import path, { dirname} from "path";
 
 const auth = z.object({
     "response": z.object({
@@ -296,7 +297,6 @@ export default defineEventHandler( async (event) => {
                     purse: game.jackpot,
                 }
 
-                console.log(`Current working directory: ${process.cwd()}`)
                 if (sendEmail) {
                     await buildEmail(mailContent)
                 }
@@ -316,7 +316,7 @@ export default defineEventHandler( async (event) => {
 })
 
 async function buildEmail(mailContent: MailContainer) {
-    const source = fs.readFileSync('./server/templates/email.handlebars', 'utf-8');
+    const source = fs.readFileSync(path.join(path.resolve(), 'server', 'templates', 'email.handlebars'), 'utf-8')
     const template = handlebars.compile(source)
 
     const htmlToSend = template({
