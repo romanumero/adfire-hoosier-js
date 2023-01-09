@@ -301,7 +301,7 @@ export default defineEventHandler( async (event) => {
                 console.log(`Email Contents: ${source}`)
 
                 if (sendEmail) {
-                    await buildEmail(mailContent)
+                    //await buildEmail(mailContent)
                 }
 
             } catch (e) {
