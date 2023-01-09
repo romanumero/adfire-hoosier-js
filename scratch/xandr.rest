@@ -10,6 +10,11 @@ Content-Type: application/json
 Authorization: {{token}}
 
 ####
+POST https://adfire-hoosier-4cmuzyupv-kortx.vercel.app/api/trigger
+Content-Type: application/json
+Authorization: {{token}}
+
+####
 PUT https://api.appnexus.com/line-item?id=19636644&advertiser_id=1501302
 Content-Type: application/json
 

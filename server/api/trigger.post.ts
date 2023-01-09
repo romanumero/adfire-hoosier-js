@@ -297,7 +297,7 @@ export default defineEventHandler( async (event) => {
                     purse: game.jackpot,
                 }
 
-                const source = fs.readFileSync(path.join(path.resolve(), 'server', 'templates', 'email.handlebars'), 'utf-8')
+                const source = fs.readFileSync(path.join(path.resolve(), 'templates', 'email.handlebars'), 'utf-8')
                 console.log(`Email Contents: ${source}`)
 
                 if (sendEmail) {
