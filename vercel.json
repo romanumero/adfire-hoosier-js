@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/trigger.ts": {
+      "includeFiles": "server/templates/**"
+    }
+  }
+}
