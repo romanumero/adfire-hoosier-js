@@ -5,7 +5,7 @@ Authorization: {{token}}
 ####
 
 # @name Run production job
-POST https://adfire-hoosier.vercel.app/api/fire
+POST https://adfire-hoosier.vercel.app/api/trigger
 Content-Type: application/json
 Authorization: {{token}}
 
