@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "server/api/*": {
-      "includeFiles": "server/templates/*"
-    }
-  }
-}
