@@ -1,0 +1,2 @@
+git config --global branch.autosetuprebase always
+git config --global pull.rebase preserve
