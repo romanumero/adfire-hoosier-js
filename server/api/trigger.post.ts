@@ -2,13 +2,13 @@ import {z} from "zod";
 import {
     ACTIVATED_CAMPAIGN_STYLE,
     CAMPAIGN_ACTIVATED_TEXT,
-    CAMPAIGN_DEACTIVATED_TEXT,
+    CAMPAIGN_DEACTIVATED_TEXT, emailTemplate,
     GameNames,
     Games,
     GameState,
     lineItemMap,
     LOTTERY_URL
-} from "~/server/helpers/constants"
+} from '~/server/helpers/constants'
 import cheerio from "cheerio";
 import {SymbolKind} from "vscode-languageserver-types";
 import Array = SymbolKind.Array;
@@ -297,11 +297,11 @@ export default defineEventHandler( async (event) => {
                     purse: game.jackpot,
                 }
 
-                const source = fs.readFileSync(path.join(process.cwd(), 'templates', 'email.handlebars'), 'utf-8')
+                const source = emailTemplate
                 console.log(`Email Contents: ${source}`)
 
                 if (sendEmail) {
-                    //await buildEmail(mailContent)
+                    await buildEmail(mailContent)
                 }
 
             } catch (e) {
@@ -319,8 +319,7 @@ export default defineEventHandler( async (event) => {
 })
 
 async function buildEmail(mailContent: MailContainer) {
-    const source = fs.readFileSync(path.join(process.cwd(), 'server', 'templates', 'email.handlebars'), 'utf-8')
-    console.log(`Email Contents: ${source}`)
+    const source = emailTemplate
     const template = handlebars.compile(source)
 
     const htmlToSend = template({

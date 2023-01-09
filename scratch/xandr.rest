@@ -10,7 +10,7 @@ Content-Type: application/json
 Authorization: {{token}}
 
 ####
-POST https://adfire-hoosier-4cmuzyupv-kortx.vercel.app/api/trigger
+POST https://adfire-hoosier-7z26ketsp-kortx.vercel.app/api/trigger
 Content-Type: application/json
 Authorization: {{token}}
 
