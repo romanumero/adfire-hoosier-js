@@ -297,9 +297,6 @@ export default defineEventHandler( async (event) => {
                     purse: game.jackpot,
                 }
 
-                const source = emailTemplate
-                console.log(`Email Contents: ${source}`)
-
                 if (sendEmail) {
                     await buildEmail(mailContent)
                 }
@@ -319,8 +316,7 @@ export default defineEventHandler( async (event) => {
 })
 
 async function buildEmail(mailContent: MailContainer) {
-    const source = emailTemplate
-    const template = handlebars.compile(source)
+    const template = handlebars.compile(emailTemplate)
 
     const htmlToSend = template({
         campaignName: mailContent.campaignName,
