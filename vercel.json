@@ -1,6 +1,6 @@
 {
   "functions": {
-    "server/api/trigger.post.ts": {
+    "api/trigger": {
       "includeFiles": "server/templates/**"
     }
   }
