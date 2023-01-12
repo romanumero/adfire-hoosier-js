@@ -25,17 +25,9 @@ export const CAMPAIGN_DEACTIVATED_TEXT = "Campaign Deactivated"
 export const ACTIVATED_CAMPAIGN_STYLE = "background-color: rgb(52, 189, 145);"
 export const lineItemMap = new Map()
 lineItemMap.set(Games.POWERBALL_LOW, 19823553)
-//lineItemMap.set(Games.POWERBALL_LOW, 19636644)
-//19823553
 lineItemMap.set(Games.POWERBALL_HIGH, 19823554)
-//lineItemMap.set(Games.POWERBALL_HIGH, 18599660)
-//19823554
 lineItemMap.set(Games.MEGA_MILLIONS_LOW, 19823552)
-//lineItemMap.set(Games.MEGA_MILLIONS_LOW, 19630973)
-//19823552
 lineItemMap.set(Games.MEGA_MILLIONS_HIGH, 19823551)
-//lineItemMap.set(Games.MEGA_MILLIONS_HIGH, 18599661)
-//19823551
 lineItemMap.set(Games.HOOSIER_LOTTO, 18599659)
 
 lineItemMap.set(Games.CASH5, 18599662)
