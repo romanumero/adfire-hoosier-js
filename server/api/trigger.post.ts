@@ -297,7 +297,7 @@ export default defineEventHandler( async (event) => {
                 }
 
                 if (sendEmail) {
-                    console.log(`Sending Email ${mailContent}`)
+                    console.log(`Sending Email ${JSON.stringify(mailContent)}`)
                     await buildEmail(mailContent)
                 }
 
@@ -347,7 +347,6 @@ async function buildEmail(mailContent: MailContainer) {
         },
         (err: Error|null, info: SentMessageInfo) => {
             console.log(info)
-            console.log(`
-            error from buildEmail method: ${err}`)
+            console.log(`error from buildEmail method: ${err}`)
         })
 }
