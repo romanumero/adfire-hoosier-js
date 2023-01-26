@@ -219,8 +219,8 @@ export default defineEventHandler( async (event) => {
 
                         const result = await toggleLineItemState(token, lineItemMap.get(Games.POWERBALL_HIGH), config.advertiserId, GameState.INACTIVE)
                         console.log(`Deactivating POWERBALL_HIGH ${game.jackpot} and State: ${powerballItemHighState}`)
-
-                        if (powerballItemHighState !== GameState.INACTIVE) {
+                        console.log(` Comparing ${powerballItemHighState} to ${GameState.INACTIVE} ... ${powerballItemHighState != GameState.INACTIVE}`)
+                        if (powerballItemHighState != GameState.INACTIVE) {
                             sendEmail = true
                         }
                     }
