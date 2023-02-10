@@ -12,11 +12,9 @@ import {
 import cheerio from "cheerio";
 import {SymbolKind} from "vscode-languageserver-types";
 import Array = SymbolKind.Array;
-import fs from "fs";
 import handlebars from "handlebars";
 import aws from "@aws-sdk/client-ses";
 import nodemailer, {SentMessageInfo} from "nodemailer";
-import path, { dirname} from "path";
 
 const auth = z.object({
     "response": z.object({
@@ -240,7 +238,7 @@ export default defineEventHandler( async (event) => {
                     const hoosierLottoItemStateRequest = await getLineItemById(token, lineItemMap.get(Games.HOOSIER_LOTTO))
                     const hoosierLottoState = hoosierLottoItemStateRequest.response["line-item"].state
 
-                    if (game.jackpot > 10) {
+                    if (game.jackpot >= 10) {
                         status = CAMPAIGN_ACTIVATED_TEXT
                         backgroundColor = ACTIVATED_CAMPAIGN_STYLE
 
