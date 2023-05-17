@@ -19,7 +19,7 @@ PUT https://api.appnexus.com/line-item?id=19636644&advertiser_id=1501302
 Content-Type: application/json
 
 
-###
+### authn:204197:febcc268c2ce3:nym2
 POST https://api.appnexus.com/auth
 Content-Type: application/json
 
@@ -29,3 +29,6 @@ Content-Type: application/json
         "password" : "2zATTB[VS8gZ$}Pb"
     }
 }
+
+###
+

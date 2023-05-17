@@ -79,6 +79,8 @@ export default defineEventHandler( async (event) => {
 
     async function getLineItemById(auth: string, id: string) {
 
+        console.log('Retrieving line item by id')
+
         const result = await $fetch(`https://api.appnexus.com/line-item?id=${id}`,
             {
                 method: 'GET',
@@ -88,6 +90,7 @@ export default defineEventHandler( async (event) => {
                 }
             })
 
+        console.log(`Successfully retrieved line item by id: ${JSON.stringify(result)}`)
         return lineItem.parse(result)
     }
 
@@ -179,6 +182,8 @@ export default defineEventHandler( async (event) => {
                             sendEmail = true
                         }
                     }
+
+                    console.log(`Successfully run MEGA_MILLIONS ${game.jackpot}`)
                 }
 
                 if (game.name === GameNames.POWERBALL) {
@@ -232,6 +237,8 @@ export default defineEventHandler( async (event) => {
                             sendEmail = true
                         }
                     }
+
+                    console.log(`Successfully run POWERBALL ${game.jackpot}`)
                 }
 
                 if (game.name === GameNames.HOOSIER_LOTTO) {
@@ -258,6 +265,8 @@ export default defineEventHandler( async (event) => {
                             sendEmail = true
                         }
                     }
+
+                    console.log(`Successfully run HOOSIER_LOTTO ${game.jackpot}`)
                 }
 
                 if (game.name === GameNames.CASH5) {
@@ -284,6 +293,8 @@ export default defineEventHandler( async (event) => {
                             sendEmail = true
                         }
                     }
+
+                    console.log(`Successfully run CASH5 ${game.jackpot}`)
                 }
 
                 const mailContent: MailContainer = {
